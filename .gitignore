@@ -1,0 +1,14 @@
+.gradle/
+build/
+*/build/
+.idea/
+*.iml
+local.properties
+.DS_Store
+.externalNativeBuild/
+.cxx/
+captures/
+.claude/
+
+build_log.txt
+wrapper_error.txt

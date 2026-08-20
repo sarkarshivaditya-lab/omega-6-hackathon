@@ -1,0 +1,171 @@
+package com.udc.collection.data.local
+
+import com.udc.collection.data.local.entity.LabTestEntity
+
+object DefaultTestCatalogue {
+
+    val tests: List<LabTestEntity> = listOf(
+        // Haematology
+        LabTestEntity(name = "Complete Blood Count (CBC)", price = 250.0, category = "Haematology"),
+        LabTestEntity(name = "Haemoglobin", price = 100.0, category = "Haematology"),
+        LabTestEntity(name = "ESR", price = 100.0, category = "Haematology"),
+        LabTestEntity(name = "Peripheral Blood Smear", price = 200.0, category = "Haematology"),
+        LabTestEntity(name = "Platelet Count", price = 150.0, category = "Haematology"),
+        LabTestEntity(name = "Reticulocyte Count", price = 150.0, category = "Haematology"),
+        LabTestEntity(name = "Prothrombin Time (PT)", price = 300.0, category = "Haematology"),
+        LabTestEntity(name = "APTT", price = 300.0, category = "Haematology"),
+        LabTestEntity(name = "INR", price = 250.0, category = "Haematology"),
+        LabTestEntity(name = "D-Dimer", price = 800.0, category = "Haematology"),
+        LabTestEntity(name = "Bleeding Time", price = 100.0, category = "Haematology"),
+        LabTestEntity(name = "Clotting Time", price = 100.0, category = "Haematology"),
+        LabTestEntity(name = "G6PD Enzyme", price = 500.0, category = "Haematology"),
+        LabTestEntity(name = "Sickling Test", price = 200.0, category = "Haematology"),
+        LabTestEntity(name = "HbA1c", price = 400.0, category = "Haematology"),
+        LabTestEntity(name = "Blood Group & Rh Typing", price = 150.0, category = "Haematology"),
+
+        // Biochemistry
+        LabTestEntity(name = "Fasting Blood Glucose", price = 80.0, category = "Biochemistry"),
+        LabTestEntity(name = "Post Prandial Blood Glucose", price = 80.0, category = "Biochemistry"),
+        LabTestEntity(name = "Random Blood Glucose", price = 80.0, category = "Biochemistry"),
+        LabTestEntity(name = "Urea", price = 120.0, category = "Biochemistry"),
+        LabTestEntity(name = "Creatinine", price = 120.0, category = "Biochemistry"),
+        LabTestEntity(name = "Blood Urea Nitrogen (BUN)", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Uric Acid", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Sodium", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Potassium", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Chloride", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Bicarbonate", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Calcium", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Phosphorus", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Magnesium", price = 200.0, category = "Biochemistry"),
+        LabTestEntity(name = "Total Protein", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Albumin", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Globulin", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Total Bilirubin", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Direct Bilirubin", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Indirect Bilirubin", price = 100.0, category = "Biochemistry"),
+        LabTestEntity(name = "SGOT (AST)", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "SGPT (ALT)", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "Alkaline Phosphatase (ALP)", price = 150.0, category = "Biochemistry"),
+        LabTestEntity(name = "GGT", price = 200.0, category = "Biochemistry"),
+        LabTestEntity(name = "LDH", price = 250.0, category = "Biochemistry"),
+        LabTestEntity(name = "CPK", price = 300.0, category = "Biochemistry"),
+        LabTestEntity(name = "CPK-MB", price = 400.0, category = "Biochemistry"),
+        LabTestEntity(name = "Troponin I", price = 600.0, category = "Biochemistry"),
+        LabTestEntity(name = "Troponin T", price = 600.0, category = "Biochemistry"),
+        LabTestEntity(name = "Amylase", price = 300.0, category = "Biochemistry"),
+        LabTestEntity(name = "Lipase", price = 300.0, category = "Biochemistry"),
+        LabTestEntity(name = "Iron", price = 200.0, category = "Biochemistry"),
+        LabTestEntity(name = "TIBC", price = 250.0, category = "Biochemistry"),
+        LabTestEntity(name = "Ferritin", price = 500.0, category = "Biochemistry"),
+
+        // Lipid Profile
+        LabTestEntity(name = "Lipid Profile (Complete)", price = 500.0, category = "Lipid Profile"),
+        LabTestEntity(name = "Total Cholesterol", price = 150.0, category = "Lipid Profile"),
+        LabTestEntity(name = "HDL Cholesterol", price = 200.0, category = "Lipid Profile"),
+        LabTestEntity(name = "LDL Cholesterol", price = 200.0, category = "Lipid Profile"),
+        LabTestEntity(name = "VLDL Cholesterol", price = 200.0, category = "Lipid Profile"),
+        LabTestEntity(name = "Triglycerides", price = 200.0, category = "Lipid Profile"),
+
+        // Thyroid
+        LabTestEntity(name = "TSH", price = 300.0, category = "Thyroid"),
+        LabTestEntity(name = "T3", price = 300.0, category = "Thyroid"),
+        LabTestEntity(name = "T4", price = 300.0, category = "Thyroid"),
+        LabTestEntity(name = "Free T3", price = 350.0, category = "Thyroid"),
+        LabTestEntity(name = "Free T4", price = 350.0, category = "Thyroid"),
+        LabTestEntity(name = "Thyroid Profile (T3, T4, TSH)", price = 700.0, category = "Thyroid"),
+        LabTestEntity(name = "Anti-TPO Antibody", price = 800.0, category = "Thyroid"),
+        LabTestEntity(name = "Anti-Thyroglobulin Antibody", price = 800.0, category = "Thyroid"),
+
+        // Hormones
+        LabTestEntity(name = "FSH", price = 400.0, category = "Hormones"),
+        LabTestEntity(name = "LH", price = 400.0, category = "Hormones"),
+        LabTestEntity(name = "Prolactin", price = 400.0, category = "Hormones"),
+        LabTestEntity(name = "Testosterone (Total)", price = 500.0, category = "Hormones"),
+        LabTestEntity(name = "Estradiol (E2)", price = 500.0, category = "Hormones"),
+        LabTestEntity(name = "Progesterone", price = 500.0, category = "Hormones"),
+        LabTestEntity(name = "Cortisol", price = 500.0, category = "Hormones"),
+        LabTestEntity(name = "Insulin Fasting", price = 500.0, category = "Hormones"),
+        LabTestEntity(name = "DHEA-S", price = 600.0, category = "Hormones"),
+        LabTestEntity(name = "AMH", price = 1500.0, category = "Hormones"),
+        LabTestEntity(name = "PTH", price = 800.0, category = "Hormones"),
+        LabTestEntity(name = "Growth Hormone", price = 700.0, category = "Hormones"),
+
+        // Vitamins
+        LabTestEntity(name = "Vitamin D (25-OH)", price = 900.0, category = "Vitamins"),
+        LabTestEntity(name = "Vitamin B12", price = 600.0, category = "Vitamins"),
+        LabTestEntity(name = "Folic Acid", price = 600.0, category = "Vitamins"),
+        LabTestEntity(name = "Vitamin C", price = 500.0, category = "Vitamins"),
+        LabTestEntity(name = "Vitamin A", price = 700.0, category = "Vitamins"),
+        LabTestEntity(name = "Vitamin E", price = 700.0, category = "Vitamins"),
+
+        // Urine
+        LabTestEntity(name = "Urine Routine & Microscopy", price = 150.0, category = "Urine"),
+        LabTestEntity(name = "Urine Culture & Sensitivity", price = 400.0, category = "Urine"),
+        LabTestEntity(name = "Urine Pregnancy Test", price = 100.0, category = "Urine"),
+        LabTestEntity(name = "Microalbuminuria", price = 400.0, category = "Urine"),
+        LabTestEntity(name = "Urine Creatinine", price = 200.0, category = "Urine"),
+        LabTestEntity(name = "24 Hour Urine Protein", price = 250.0, category = "Urine"),
+        LabTestEntity(name = "Urine Calcium", price = 200.0, category = "Urine"),
+        LabTestEntity(name = "Urine Sodium / Potassium", price = 250.0, category = "Urine"),
+
+        // Serology
+        LabTestEntity(name = "Widal Test", price = 200.0, category = "Serology"),
+        LabTestEntity(name = "RA Factor", price = 200.0, category = "Serology"),
+        LabTestEntity(name = "CRP", price = 250.0, category = "Serology"),
+        LabTestEntity(name = "ASO Titre", price = 250.0, category = "Serology"),
+        LabTestEntity(name = "VDRL", price = 200.0, category = "Serology"),
+        LabTestEntity(name = "HIV (ELISA)", price = 400.0, category = "Serology"),
+        LabTestEntity(name = "HBsAg", price = 250.0, category = "Serology"),
+        LabTestEntity(name = "HCV Antibody", price = 400.0, category = "Serology"),
+        LabTestEntity(name = "Dengue NS1 Antigen", price = 500.0, category = "Serology"),
+        LabTestEntity(name = "Dengue IgM / IgG", price = 500.0, category = "Serology"),
+        LabTestEntity(name = "Malaria Antigen Test", price = 300.0, category = "Serology"),
+        LabTestEntity(name = "Typhoid IgM (Rapid)", price = 300.0, category = "Serology"),
+        LabTestEntity(name = "H. Pylori IgG", price = 400.0, category = "Serology"),
+        LabTestEntity(name = "ANA", price = 800.0, category = "Serology"),
+        LabTestEntity(name = "Anti-dsDNA", price = 900.0, category = "Serology"),
+        LabTestEntity(name = "Chikungunya IgM", price = 600.0, category = "Serology"),
+        LabTestEntity(name = "Leptospira IgM", price = 600.0, category = "Serology"),
+
+        // Tumour Markers
+        LabTestEntity(name = "PSA Total", price = 700.0, category = "Tumour Markers"),
+        LabTestEntity(name = "PSA Free", price = 700.0, category = "Tumour Markers"),
+        LabTestEntity(name = "CA-125", price = 800.0, category = "Tumour Markers"),
+        LabTestEntity(name = "CA 19-9", price = 900.0, category = "Tumour Markers"),
+        LabTestEntity(name = "CEA", price = 800.0, category = "Tumour Markers"),
+        LabTestEntity(name = "AFP", price = 700.0, category = "Tumour Markers"),
+        LabTestEntity(name = "Beta HCG", price = 500.0, category = "Tumour Markers"),
+        LabTestEntity(name = "CA 15-3", price = 900.0, category = "Tumour Markers"),
+
+        // Microbiology
+        LabTestEntity(name = "Blood Culture & Sensitivity", price = 700.0, category = "Microbiology"),
+        LabTestEntity(name = "Sputum Culture & Sensitivity", price = 500.0, category = "Microbiology"),
+        LabTestEntity(name = "Throat Swab Culture", price = 500.0, category = "Microbiology"),
+        LabTestEntity(name = "Stool Routine Examination", price = 200.0, category = "Microbiology"),
+        LabTestEntity(name = "Stool Culture", price = 500.0, category = "Microbiology"),
+        LabTestEntity(name = "Stool Occult Blood", price = 200.0, category = "Microbiology"),
+        LabTestEntity(name = "Sputum AFB", price = 300.0, category = "Microbiology"),
+        LabTestEntity(name = "KOH Preparation", price = 200.0, category = "Microbiology"),
+        LabTestEntity(name = "Gram Stain", price = 150.0, category = "Microbiology"),
+
+        // Diabetes Panel
+        LabTestEntity(name = "Glucose Tolerance Test (GTT)", price = 300.0, category = "Diabetes"),
+        LabTestEntity(name = "C-Peptide Fasting", price = 700.0, category = "Diabetes"),
+        LabTestEntity(name = "C-Peptide Post Prandial", price = 700.0, category = "Diabetes"),
+        LabTestEntity(name = "GAD Antibody", price = 1500.0, category = "Diabetes"),
+
+        // Packages
+        LabTestEntity(name = "Basic Health Package", price = 999.0, category = "Packages"),
+        LabTestEntity(name = "Comprehensive Health Package", price = 1999.0, category = "Packages"),
+        LabTestEntity(name = "Cardiac Risk Package", price = 1499.0, category = "Packages"),
+        LabTestEntity(name = "Diabetic Monitoring Package", price = 799.0, category = "Packages"),
+        LabTestEntity(name = "Liver Function Test (LFT)", price = 600.0, category = "Packages"),
+        LabTestEntity(name = "Kidney Function Test (KFT)", price = 500.0, category = "Packages"),
+        LabTestEntity(name = "Arthritis Profile", price = 1000.0, category = "Packages"),
+        LabTestEntity(name = "Female Hormone Profile", price = 1500.0, category = "Packages"),
+        LabTestEntity(name = "Male Hormone Profile", price = 1200.0, category = "Packages"),
+        LabTestEntity(name = "TORCH Panel", price = 2500.0, category = "Packages"),
+        LabTestEntity(name = "Antenatal Profile", price = 1800.0, category = "Packages")
+    )
+}

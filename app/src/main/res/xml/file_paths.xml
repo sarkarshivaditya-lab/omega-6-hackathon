@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-files-path name="udc_receipts" path="UDC_Receipts/" />
+    <external-files-path name="udc_backups" path="UDC_Backups/" />
+</paths>
