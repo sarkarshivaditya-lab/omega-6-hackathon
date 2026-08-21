@@ -12,16 +12,16 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// UDC Brand Colors
-val UDCBlue = Color(0xFF1565C0)
-val UDCBlueDark = Color(0xFF0D47A1)
-val UDCBlueLight = Color(0xFF1E88E5)
-val UDCSurface = Color(0xFFF8FAFE)
-val UDCCard = Color(0xFFFFFFFF)
-val UDCError = Color(0xFFB71C1C)
+// OMEGA 6.0 Brand Colors
+val OmegaBlue = Color(0xFF1565C0)
+val OmegaBlueDark = Color(0xFF0D47A1)
+val OmegaBlueLight = Color(0xFF1E88E5)
+val OmegaSurface = Color(0xFFF8FAFE)
+val OmegaCard = Color(0xFFFFFFFF)
+val OmegaError = Color(0xFFB71C1C)
 
 private val LightColorScheme = lightColorScheme(
-    primary = UDCBlue,
+    primary = OmegaBlue,
     onPrimary = Color.White,
     primaryContainer = Color(0xFFD6E4FF),
     onPrimaryContainer = Color(0xFF001C3D),
@@ -31,14 +31,14 @@ private val LightColorScheme = lightColorScheme(
     onSecondaryContainer = Color(0xFF001257),
     tertiary = Color(0xFF006687),
     onTertiary = Color.White,
-    background = UDCSurface,
+    background = OmegaSurface,
     onBackground = Color(0xFF1A1C1E),
-    surface = UDCCard,
+    surface = OmegaCard,
     onSurface = Color(0xFF1A1C1E),
     surfaceVariant = Color(0xFFE1E9F8),
     onSurfaceVariant = Color(0xFF44474F),
     outline = Color(0xFF74777F),
-    error = UDCError,
+    error = OmegaError,
     onError = Color.White
 )
 
@@ -60,12 +60,11 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun UDCTheme(
+fun OmegaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
-
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -74,7 +73,6 @@ fun UDCTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
-
     MaterialTheme(
         colorScheme = colorScheme,
         typography = UDCTypography,
@@ -82,3 +80,10 @@ fun UDCTheme(
         content = content
     )
 }
+
+@Deprecated("Use OmegaTheme")
+@Composable
+fun UDCTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) = OmegaTheme(darkTheme, content)
