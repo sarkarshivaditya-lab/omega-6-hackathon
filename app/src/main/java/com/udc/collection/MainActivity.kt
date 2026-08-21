@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.udc.collection.ui.navigation.AppNavigation
-import com.udc.collection.ui.theme.UDCTheme
+import com.udc.collection.ui.theme.OmegaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            UDCTheme {
+            OmegaTheme {
                 AppNavigation()
             }
         }
