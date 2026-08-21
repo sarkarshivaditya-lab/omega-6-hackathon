@@ -17,27 +17,21 @@ class PackageRepository @Inject constructor(
 ) {
     private val gson = Gson()
 
-    fun getAllPackages(): Flow<List<LabPackage>> =
-        dao.getAllPackages().map { it.map { e -> e.toDomain() } }
-
-    fun searchPackages(query: String): Flow<List<LabPackage>> =
-        dao.searchPackages(query).map { it.map { e -> e.toDomain() } }
-
+    fun getAllPackages(): Flow<List<LabPackage>> = dao.getAllPackages().map { it.map { e -> e.toDomain() } }
+    fun searchPackages(query: String): Flow<List<LabPackage>> = dao.searchPackages(query).map { it.map { e -> e.toDomain() } }
     suspend fun addPackage(pkg: LabPackage): Long = dao.insertPackage(pkg.toEntity())
-
     suspend fun updatePackage(pkg: LabPackage) = dao.updatePackage(pkg.toEntity())
-
     suspend fun deletePackage(pkg: LabPackage) = dao.deletePackage(pkg.toEntity())
 
     suspend fun seedIfEmpty() {
-        if (dao.getPackageCount() == 0) {
+        if (dao.getPackageCount() == 0 && DefaultPackages.packages.isNotEmpty()) {
             dao.insertPackages(DefaultPackages.packages)
         }
     }
 
     suspend fun resetToDefault() {
         dao.deleteAllPackages()
-        dao.insertPackages(DefaultPackages.packages)
+        if (DefaultPackages.packages.isNotEmpty()) dao.insertPackages(DefaultPackages.packages)
     }
 
     private fun LabPackageEntity.toDomain(): LabPackage {
