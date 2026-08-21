@@ -39,18 +39,22 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val onboardingVm: OnboardingViewModel = hiltViewModel()
     val onboardingDone by onboardingVm.onboardingDone.collectAsState(initial = null)
-    val startDestination = when (onboardingDone) { null -> return; false -> Screen.Onboarding.route; else -> Screen.Home.route }
+    val startDestination = when (onboardingDone) {
+        null -> return
+        false -> Screen.Onboarding.route
+        else -> Screen.Home.route
+    }
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Screen.Onboarding.route) {
             OnboardingScreen(onComplete = { navController.navigate(Screen.Home.route) { popUpTo(Screen.Onboarding.route) { inclusive = true } } })
         }
         composable(Screen.Home.route) {
             HomeScreen(
-                onNewCustomer = { navController.navigate(Screen.WizardGraph.route) },
-                onCustomerHistory = { navController.navigate(Screen.CustomerHistory.route) },
-                onServiceCatalogue = { navController.navigate(Screen.ServiceCatalogue.route) },
+                onNewPatient = { navController.navigate(Screen.WizardGraph.route) },
+                onPatientHistory = { navController.navigate(Screen.CustomerHistory.route) },
+                onTestCatalogue = { navController.navigate(Screen.ServiceCatalogue.route) },
                 onSettings = { navController.navigate(Screen.Settings.route) },
-                onCustomerClick = { id -> navController.navigate(Screen.CustomerDetail.createRoute(id)) }
+                onPatientClick = { id -> navController.navigate(Screen.CustomerDetail.createRoute(id)) }
             )
         }
         navigation(startDestination = Screen.Wizard.route, route = Screen.WizardGraph.route) {
@@ -65,7 +69,7 @@ fun AppNavigation() {
         }
         composable(Screen.CustomerDetail.route, arguments = listOf(navArgument("customerId") { type = NavType.LongType })) { entry ->
             val customerId = entry.arguments?.getLong("customerId") ?: return@composable
-            PatientDetailScreen(customerId = customerId, onBack = { navController.popBackStack() })
+            PatientDetailScreen(patientId = customerId, onBack = { navController.popBackStack() })
         }
         composable(Screen.ServiceCatalogue.route) { TestCatalogueScreen(onBack = { navController.popBackStack() }) }
         composable(Screen.Settings.route) { SettingsScreen(onBack = { navController.popBackStack() }) }
