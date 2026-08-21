@@ -28,9 +28,9 @@ sealed class Screen(val route: String) {
     object Home : Screen("home")
     object WizardGraph : Screen("wizard_graph")
     object Wizard : Screen("wizard")
-    object PatientHistory : Screen("customer_history")
-    object PatientDetail : Screen("customer_detail/{customerId}") { fun createRoute(id: Long) = "customer_detail/$id" }
-    object TestCatalogue : Screen("service_catalogue")
+    object CustomerHistory : Screen("customer_history")
+    object CustomerDetail : Screen("customer_detail/{customerId}") { fun createRoute(id: Long) = "customer_detail/$id" }
+    object ServiceCatalogue : Screen("service_catalogue")
     object Settings : Screen("settings")
 }
 
@@ -40,15 +40,17 @@ fun AppNavigation() {
     val onboardingVm: OnboardingViewModel = hiltViewModel()
     val onboardingDone by onboardingVm.onboardingDone.collectAsState(initial = null)
     val startDestination = when (onboardingDone) { null -> return; false -> Screen.Onboarding.route; else -> Screen.Home.route }
-    NavHost(navController, startDestination = startDestination) {
-        composable(Screen.Onboarding.route) { OnboardingScreen { navController.navigate(Screen.Home.route) { popUpTo(Screen.Onboarding.route) { inclusive = true } } } }
+    NavHost(navController = navController, startDestination = startDestination) {
+        composable(Screen.Onboarding.route) {
+            OnboardingScreen(onComplete = { navController.navigate(Screen.Home.route) { popUpTo(Screen.Onboarding.route) { inclusive = true } } })
+        }
         composable(Screen.Home.route) {
             HomeScreen(
-                onNewPatient = { navController.navigate(Screen.WizardGraph.route) },
-                onPatientHistory = { navController.navigate(Screen.PatientHistory.route) },
-                onTestCatalogue = { navController.navigate(Screen.TestCatalogue.route) },
+                onNewCustomer = { navController.navigate(Screen.WizardGraph.route) },
+                onCustomerHistory = { navController.navigate(Screen.CustomerHistory.route) },
+                onServiceCatalogue = { navController.navigate(Screen.ServiceCatalogue.route) },
                 onSettings = { navController.navigate(Screen.Settings.route) },
-                onPatientClick = { id -> navController.navigate(Screen.PatientDetail.createRoute(id)) }
+                onCustomerClick = { id -> navController.navigate(Screen.CustomerDetail.createRoute(id)) }
             )
         }
         navigation(startDestination = Screen.Wizard.route, route = Screen.WizardGraph.route) {
@@ -58,13 +60,15 @@ fun AppNavigation() {
                 PatientWizardScreen(onBack = { navController.popBackStack() }, onSaved = { navController.navigate(Screen.Home.route) { popUpTo(Screen.Home.route) { inclusive = true } } }, viewModel = vm)
             }
         }
-        composable(Screen.PatientHistory.route) { PatientHistoryScreen(onBack = { navController.popBackStack() }, onPatientClick = { id -> navController.navigate(Screen.PatientDetail.createRoute(id)) }) }
-        composable(Screen.PatientDetail.route, arguments = listOf(navArgument("customerId") { type = NavType.LongType })) { entry ->
-            val customerId = entry.arguments?.getLong("customerId") ?: return@composable
-            PatientDetailScreen(customerId, onBack = { navController.popBackStack() })
+        composable(Screen.CustomerHistory.route) {
+            PatientHistoryScreen(onBack = { navController.popBackStack() }, onCustomerClick = { id -> navController.navigate(Screen.CustomerDetail.createRoute(id)) })
         }
-        composable(Screen.TestCatalogue.route) { TestCatalogueScreen { navController.popBackStack() } }
-        composable(Screen.Settings.route) { SettingsScreen { navController.popBackStack() } }
+        composable(Screen.CustomerDetail.route, arguments = listOf(navArgument("customerId") { type = NavType.LongType })) { entry ->
+            val customerId = entry.arguments?.getLong("customerId") ?: return@composable
+            PatientDetailScreen(customerId = customerId, onBack = { navController.popBackStack() })
+        }
+        composable(Screen.ServiceCatalogue.route) { TestCatalogueScreen(onBack = { navController.popBackStack() }) }
+        composable(Screen.Settings.route) { SettingsScreen(onBack = { navController.popBackStack() }) }
     }
 }
 
