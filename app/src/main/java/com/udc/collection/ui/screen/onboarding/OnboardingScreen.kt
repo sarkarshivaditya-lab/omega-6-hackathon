@@ -3,7 +3,7 @@ package com.udc.collection.ui.screen.onboarding
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocalHospital
+import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,14 +23,10 @@ fun OnboardingScreen(
     var agentName by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
+    LaunchedEffect(Unit) { focusRequester.requestFocus() }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
+        modifier = Modifier.fillMaxSize().padding(24.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -39,31 +35,29 @@ fun OnboardingScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Icon(
-                imageVector = Icons.Filled.LocalHospital,
+                imageVector = Icons.Filled.Apps,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(80.dp)
             )
-
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "Urban Diagnostic Collection",
+                    text = "OMEGA 6.0",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "Blood Collection Management System",
+                    text = "Universal Collection & Billing Platform",
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
@@ -74,23 +68,19 @@ fun OnboardingScreen(
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     Text(
-                        text = "Welcome! Please enter your name to get started.",
+                        text = "Welcome! Enter your name to get started.",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-
                     OutlinedTextField(
                         value = agentName,
                         onValueChange = { agentName = it },
-                        label = { Text("Collection Agent Name") },
+                        label = { Text("Your Name") },
                         placeholder = { Text("Enter your full name") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .focusRequester(focusRequester),
+                        modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                         singleLine = true,
                         shape = RoundedCornerShape(12.dp)
                     )
-
                     Button(
                         onClick = {
                             if (agentName.trim().isNotEmpty()) {
@@ -99,16 +89,10 @@ fun OnboardingScreen(
                             }
                         },
                         enabled = agentName.trim().isNotEmpty(),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
+                        modifier = Modifier.fillMaxWidth().height(56.dp),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text(
-                            text = "Save & Continue",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
+                        Text("Save & Continue", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
