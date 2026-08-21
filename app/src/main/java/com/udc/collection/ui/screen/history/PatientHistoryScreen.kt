@@ -23,23 +23,22 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
-fun PatientHistoryScreen(onBack: () -> Unit, onPatientClick: (Long) -> Unit, viewModel: PatientHistoryViewModel = hiltViewModel()) {
+fun PatientHistoryScreen(onBack: () -> Unit, onCustomerClick: (Long) -> Unit, viewModel: PatientHistoryViewModel = hiltViewModel()) {
     val searchQuery by viewModel.searchQuery.collectAsState()
     val customers by viewModel.patients.collectAsState()
     val recentlyDeleted by viewModel.recentlyDeleted.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(recentlyDeleted) {
         val deleted = recentlyDeleted ?: return@LaunchedEffect
-        val result = snackbarHostState.showSnackbar("${deleted.name} deleted", "Undo", SnackbarDuration.Long)
+        val result = snackbarHostState.showSnackbar(message = "${deleted.name} deleted", actionLabel = "Undo", duration = SnackbarDuration.Long)
         when (result) { SnackbarResult.ActionPerformed -> viewModel.undoDelete(); SnackbarResult.Dismissed -> viewModel.clearRecentlyDeleted() }
     }
     Scaffold(topBar = { UDCTopBar("Customer History", onBack) }, snackbarHost = { SnackbarHost(snackbarHostState) }) { paddingValues ->
         Column(Modifier.fillMaxSize().padding(paddingValues)) {
             OutlinedTextField(value = searchQuery, onValueChange = viewModel::updateSearch, placeholder = { Text("Search by name, phone, number, date...") }, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), singleLine = true, shape = RoundedCornerShape(12.dp), leadingIcon = { Icon(Icons.Filled.Search, null) }, trailingIcon = { if (searchQuery.isNotEmpty()) IconButton(onClick = { viewModel.updateSearch("") }) { Icon(Icons.Filled.Clear, null) } })
-            if (customers.isEmpty()) EmptyState(if (searchQuery.isBlank()) "No customers yet" else "No customers found", Icons.Filled.Person, Modifier.weight(1f))
-            else {
+            if (customers.isEmpty()) EmptyState(if (searchQuery.isBlank()) "No customers yet" else "No customers found", Icons.Filled.Person, Modifier.weight(1f)) else {
                 Text("${customers.size} customer${if (customers.size == 1) "" else "s"}  •  swipe left to delete", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp))
-                LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { items(customers, key = { it.id }) { customer -> SwipeToDeleteCustomerItem(customer, { viewModel.deletePatient(customer) }) { onPatientClick(customer.id) } }; item { Spacer(Modifier.height(8.dp)) } }
+                LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { items(customers, key = { it.id }) { customer -> SwipeToDeleteCustomerItem(customer, { viewModel.deletePatient(customer) }) { onCustomerClick(customer.id) } }; item { Spacer(Modifier.height(8.dp)) } }
             }
         }
     }
@@ -48,13 +47,13 @@ fun PatientHistoryScreen(onBack: () -> Unit, onPatientClick: (Long) -> Unit, vie
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable private fun SwipeToDeleteCustomerItem(customer: Patient, onDelete: () -> Unit, onClick: () -> Unit) {
     val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = { value -> if (value == SwipeToDismissBoxValue.EndToStart) { onDelete(); true } else false })
-    SwipeToDismissBox(state = dismissState, enableDismissFromStartToEnd = false, backgroundContent = { Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.errorContainer, RoundedCornerShape(12.dp)).padding(end = 24.dp), Alignment.CenterEnd) { Icon(Icons.Filled.Delete, "Delete", tint = MaterialTheme.colorScheme.onErrorContainer) } }) { CustomerHistoryItem(customer, onClick) }
+    SwipeToDismissBox(state = dismissState, enableDismissFromStartToEnd = false, backgroundContent = { Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.errorContainer, RoundedCornerShape(12.dp)).padding(end = 24.dp), contentAlignment = Alignment.CenterEnd) { Icon(Icons.Filled.Delete, "Delete", tint = MaterialTheme.colorScheme.onErrorContainer) } }) { CustomerHistoryItem(customer, onClick) }
 }
 
 @Composable private fun CustomerHistoryItem(customer: Patient, onClick: () -> Unit) {
     val dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
-    Card(Modifier.fillMaxWidth().clickable(onClick = onClick), RoundedCornerShape(12.dp), elevation = CardDefaults.cardElevation(2.dp)) {
-        Row(Modifier.fillMaxWidth().padding(16.dp), Alignment.CenterVertically) {
+    Card(Modifier.fillMaxWidth().clickable(onClick = onClick), shape = RoundedCornerShape(12.dp), elevation = CardDefaults.cardElevation(2.dp)) {
+        Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(customer.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(4.dp)); Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) { Text(customer.patientNumber, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Medium); Text(customer.date.format(dateFormat), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant); if (customer.phone.isNotBlank()) Text(customer.phone, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
