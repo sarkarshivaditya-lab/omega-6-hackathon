@@ -28,11 +28,9 @@ sealed class Screen(val route: String) {
     object Home : Screen("home")
     object WizardGraph : Screen("wizard_graph")
     object Wizard : Screen("wizard")
-    object PatientHistory : Screen("patient_history")
-    object PatientDetail : Screen("patient_detail/{patientId}") {
-        fun createRoute(id: Long) = "patient_detail/$id"
-    }
-    object TestCatalogue : Screen("test_catalogue")
+    object PatientHistory : Screen("customer_history")
+    object PatientDetail : Screen("customer_detail/{customerId}") { fun createRoute(id: Long) = "customer_detail/$id" }
+    object TestCatalogue : Screen("service_catalogue")
     object Settings : Screen("settings")
 }
 
@@ -41,25 +39,9 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val onboardingVm: OnboardingViewModel = hiltViewModel()
     val onboardingDone by onboardingVm.onboardingDone.collectAsState(initial = null)
-
-    val startDestination = when (onboardingDone) {
-        null -> return
-        false -> Screen.Onboarding.route
-        else -> Screen.Home.route
-    }
-
-    NavHost(navController = navController, startDestination = startDestination) {
-
-        composable(Screen.Onboarding.route) {
-            OnboardingScreen(
-                onComplete = {
-                    navController.navigate(Screen.Home.route) {
-                        popUpTo(Screen.Onboarding.route) { inclusive = true }
-                    }
-                }
-            )
-        }
-
+    val startDestination = when (onboardingDone) { null -> return; false -> Screen.Onboarding.route; else -> Screen.Home.route }
+    NavHost(navController, startDestination = startDestination) {
+        composable(Screen.Onboarding.route) { OnboardingScreen { navController.navigate(Screen.Home.route) { popUpTo(Screen.Onboarding.route) { inclusive = true } } } }
         composable(Screen.Home.route) {
             HomeScreen(
                 onNewPatient = { navController.navigate(Screen.WizardGraph.route) },
@@ -69,55 +51,22 @@ fun AppNavigation() {
                 onPatientClick = { id -> navController.navigate(Screen.PatientDetail.createRoute(id)) }
             )
         }
-
-        // Nested graph scopes PatientWizardViewModel to the whole wizard flow
         navigation(startDestination = Screen.Wizard.route, route = Screen.WizardGraph.route) {
             composable(Screen.Wizard.route) { entry ->
                 val parentEntry = rememberParentEntry(entry, Screen.WizardGraph.route, navController)
                 val vm: PatientWizardViewModel = hiltViewModel(parentEntry)
-                PatientWizardScreen(
-                    onBack = { navController.popBackStack() },
-                    onSaved = {
-                        navController.navigate(Screen.Home.route) {
-                            popUpTo(Screen.Home.route) { inclusive = true }
-                        }
-                    },
-                    viewModel = vm
-                )
+                PatientWizardScreen(onBack = { navController.popBackStack() }, onSaved = { navController.navigate(Screen.Home.route) { popUpTo(Screen.Home.route) { inclusive = true } } }, viewModel = vm)
             }
         }
-
-        composable(Screen.PatientHistory.route) {
-            PatientHistoryScreen(
-                onBack = { navController.popBackStack() },
-                onPatientClick = { id -> navController.navigate(Screen.PatientDetail.createRoute(id)) }
-            )
+        composable(Screen.PatientHistory.route) { PatientHistoryScreen(onBack = { navController.popBackStack() }, onPatientClick = { id -> navController.navigate(Screen.PatientDetail.createRoute(id)) }) }
+        composable(Screen.PatientDetail.route, arguments = listOf(navArgument("customerId") { type = NavType.LongType })) { entry ->
+            val customerId = entry.arguments?.getLong("customerId") ?: return@composable
+            PatientDetailScreen(customerId, onBack = { navController.popBackStack() })
         }
-
-        composable(
-            route = Screen.PatientDetail.route,
-            arguments = listOf(navArgument("patientId") { type = NavType.LongType })
-        ) { entry ->
-            val patientId = entry.arguments?.getLong("patientId") ?: return@composable
-            PatientDetailScreen(
-                patientId = patientId,
-                onBack = { navController.popBackStack() }
-            )
-        }
-
-        composable(Screen.TestCatalogue.route) {
-            TestCatalogueScreen(onBack = { navController.popBackStack() })
-        }
-
-        composable(Screen.Settings.route) {
-            SettingsScreen(onBack = { navController.popBackStack() })
-        }
+        composable(Screen.TestCatalogue.route) { TestCatalogueScreen { navController.popBackStack() } }
+        composable(Screen.Settings.route) { SettingsScreen { navController.popBackStack() } }
     }
 }
 
 @Composable
-private fun rememberParentEntry(
-    entry: NavBackStackEntry,
-    parentRoute: String,
-    navController: NavController
-): NavBackStackEntry = remember(entry) { navController.getBackStackEntry(parentRoute) }
+private fun rememberParentEntry(entry: NavBackStackEntry, parentRoute: String, navController: NavController): NavBackStackEntry = remember(entry) { navController.getBackStackEntry(parentRoute) }
