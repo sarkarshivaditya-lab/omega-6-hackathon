@@ -13,32 +13,21 @@ import javax.inject.Singleton
 class LabTestRepository @Inject constructor(
     private val dao: LabTestDao
 ) {
-    fun getAllTests(): Flow<List<LabTest>> =
-        dao.getAllTests().map { it.map(LabTestEntity::toDomain) }
-
-    fun searchTests(query: String): Flow<List<LabTest>> =
-        dao.searchTests(query).map { it.map(LabTestEntity::toDomain) }
-
-    fun getFrequentlyUsedTests(limit: Int = 10): Flow<List<LabTest>> =
-        dao.getFrequentlyUsedTests(limit).map { it.map(LabTestEntity::toDomain) }
-
+    fun getAllTests(): Flow<List<LabTest>> = dao.getAllTests().map { it.map(LabTestEntity::toDomain) }
+    fun searchTests(query: String): Flow<List<LabTest>> = dao.searchTests(query).map { it.map(LabTestEntity::toDomain) }
+    fun getFrequentlyUsedTests(limit: Int = 10): Flow<List<LabTest>> = dao.getFrequentlyUsedTests(limit).map { it.map(LabTestEntity::toDomain) }
     suspend fun addTest(test: LabTest): Long = dao.insertTest(test.toEntity())
-
     suspend fun updateTest(test: LabTest) = dao.updateTest(test.toEntity())
-
     suspend fun deleteTest(test: LabTest) = dao.deleteTest(test.toEntity())
-
-    suspend fun incrementUseCount(testIds: List<Long>) {
-        if (testIds.isNotEmpty()) dao.incrementUseCount(testIds)
-    }
+    suspend fun incrementUseCount(testIds: List<Long>) { if (testIds.isNotEmpty()) dao.incrementUseCount(testIds) }
 
     suspend fun resetToDefault() {
         dao.deleteAllTests()
-        dao.insertTests(DefaultTestCatalogue.tests)
+        if (DefaultTestCatalogue.tests.isNotEmpty()) dao.insertTests(DefaultTestCatalogue.tests)
     }
 
     suspend fun seedIfEmpty() {
-        if (dao.getTestCount() == 0) {
+        if (dao.getTestCount() == 0 && DefaultTestCatalogue.tests.isNotEmpty()) {
             dao.insertTests(DefaultTestCatalogue.tests)
         }
     }
